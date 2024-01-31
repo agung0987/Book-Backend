@@ -11,4 +11,7 @@ class CategoryModel extends Model
     protected $table = 'category';
     protected $primaryKey = 'id';
     protected $fillable = ['name'];
+    public function Book() {
+        return $this->hasOne(BookModel::class,'id','id');
+    }
 }

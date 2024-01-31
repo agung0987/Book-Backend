@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookModel;
 use App\Models\CategoryModel;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,16 @@ class CategoryController extends Controller
         return response()->json([
             'message'   => 'success',
             'data'      => $category
+        ], 200);
+
+    }
+
+    public function getBook(string $id)
+    {
+        $book= BookModel::where('category_id',$id)->get();
+        return response()->json([
+            'message'   => 'success',
+            'data'      => $book
         ], 200);
 
     }
@@ -47,11 +58,6 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category= CategoryModel::find($id);
-        return response()->json([
-            'message'   => 'success',
-            'data'      => $category
-        ], 200);
     }
 
     /**

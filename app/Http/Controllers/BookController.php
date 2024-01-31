@@ -12,7 +12,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books= BookModel::get();
+        $books= BookModel::with('Category')->get();
         return response()->json([
             'message'   => 'success',
             'data'      => $books
@@ -38,7 +38,15 @@ class BookController extends Controller
         $book->release_year = $request->release_year;
         $book->price = $request->price;
         $book->total_page = $request->total_page;
-        $book->thickness = $request->thickness;
+        if($request->total_page <= 100 ){
+            $thickness = 'Tipis';
+        }
+        elseif($request->total_page >= 101  && $request->total_page <=200 ){
+            $thickness = 'Sedang';
+        }else{
+            $thickness = 'tebal';
+        }
+        $book->thickness = $thickness;
         $book->category_id = $request->category_id;
         $book->save();
         return response()->json([
