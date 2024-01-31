@@ -67,7 +67,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-      
+        $category = CategoryModel::where('id', $id)->first();
+        $category->name = $request->name;
+        $category->update();
+        
+        return response()->json([
+            'message'   => 'success',
+            'data'      => $category
+        ], 200);
 
     }
 
