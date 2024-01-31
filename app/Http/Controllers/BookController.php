@@ -76,7 +76,29 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $book = BookModel::where('id', $id)->first();
+        $book->title = $request->title;
+        $book->description = $request->description;
+        $book->image_url = $request->image_url;
+        $book->release_year = $request->release_year;
+        $book->price = $request->price;
+        $book->total_page = $request->total_page;
+        if($request->total_page <= 100 ){
+            $thickness = 'Tipis';
+        }
+        elseif($request->total_page >= 101  && $request->total_page <=200 ){
+            $thickness = 'Sedang';
+        }else{
+            $thickness = 'tebal';
+        }
+        $book->thickness = $thickness;
+        $book->category_id = $request->category_id;
+        $book->update();
+        
+        return response()->json([
+            'message'   => 'success',
+            'data'      => $book
+        ], 200);
     }
 
     /**
@@ -84,6 +106,18 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $del = BookModel::find($id);
+        if (!is_null($del)) {
+            $del->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus'
+            ], 200);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'jabatan not found'
+        ], 404);
     }
 }
