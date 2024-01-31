@@ -12,6 +12,11 @@ class BookController extends Controller
      */
     public function index()
     {
+        $book= BookModel::get();
+        return response()->json([
+            'message'   => 'success',
+            'data'      => $book
+        ], 200);
     }
 
     /**
