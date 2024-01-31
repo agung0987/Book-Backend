@@ -12,10 +12,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        $book= BookModel::get();
+        $books= BookModel::get();
         return response()->json([
             'message'   => 'success',
-            'data'      => $book
+            'data'      => $books
         ], 200);
     }
 
@@ -40,19 +40,10 @@ class BookController extends Controller
         $book->total_page = $request->total_page;
         $book->thickness = $request->thickness;
         $book->category_id = $request->category_id;
-        $myJSON = json_encode($book);
-        dd($myJSON);
-        // $lS = '<script>
-
-        // localStorage.setItem("title",$user_id);
-        // localStorage.setItem("request_id",$request_id);
-        // localStorage.setItem("price",$price);
-        // localStorage.setItem("user_phone",$user_phone);
-
-        //  </script>';
+        $book->save();
         return response()->json([
             'message'   => 'success',
-            // 'data'      => 
+            'data'      => $book
         ], 200);
     }
 
