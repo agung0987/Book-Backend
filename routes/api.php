@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('categories', CategoryController::class);
 Route::get('categories/{id}/books', [CategoryController::class,'getBook']);
 Route::resource('books', BookController::class);
+Route::post('/login', [LoginController::class,'login'])->name('login');
+Route::post('/logout', [LogoutController::class,'logout'])->name('logout');

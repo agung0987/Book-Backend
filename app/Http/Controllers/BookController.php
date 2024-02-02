@@ -12,7 +12,18 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books= BookModel::with('Category')->get();
+        $sortByTitle = request()->input('sortByTitle');
+        $minYear = request()->input('minYear');
+        $maxPage = request()->input('maxPage');       
+        if($sortByTitle){
+            $books = BookModel::orderBy('id', $sortByTitle)->with('Category')->get();
+        }elseif($minYear){
+            $books = BookModel::where('release_year', $minYear)->with('Category')->get();
+        }elseif($maxPage){
+            $books = BookModel::where('total_page', $maxPage)->with('Category')->get();
+        }else{
+            $books= BookModel::with('Category')->get();
+        }
         return response()->json([
             'message'   => 'success',
             'data'      => $books
